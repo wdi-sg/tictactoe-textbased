@@ -1,3 +1,14 @@
+function gameStart() {
+  if (confirm("Would you like to play?")) {
+
+  } else {
+    throw new Error("Bye!");
+  }
+}
+gameStart();
+var playerOne = prompt("Player One's Name:");
+var playerTwo = prompt("Player Two's Name:");
+
 var board = {
   top:{
     col1:".",
@@ -16,7 +27,7 @@ var board = {
   }
 };
 
-var inputCount = 0
+var inputCount = 1
 
 // var aOne = board.top.col1;
 // var aTwo = board.middle.col1;
@@ -62,19 +73,25 @@ buildBoard();
 var running = true;
 // run the game on a loop
 while(running){
+  var rowCheck = ["top", "middle", "bottom"];
+  var columnCheck = ["col1", "col2", "col3"]
   var row = prompt("enter your row: top, middle or bottom");
   var column = prompt("enter your column: col1, col2, col3");
-  if (inputCount % 2 == 1 && board[row][column] === ".") {
+  if (inputCount % 2 == 1 && board[row][column] === "." && rowCheck.includes(row) && columnCheck.includes(column)) {
       board[row][column] = "X";
-    }
-  else if (inputCount % 2 == 0 && board[row][column] === ".") {
+      console.log(playerTwo + "'s turn!")
+    } else if (inputCount % 2 == 0 && board[row][column] === "." && rowCheck.includes(row) && columnCheck.includes(column)) {
         board[row][column] = "O";
-      }
-  else {
-    console.log("there's already something there!");
-  }
-  inputCount = inputCount + 1
-  console.log("current value @: ", board[row][column] );
+        console.log(playerOne + "'s turn!")
+    } else if (board[row][column] != ".") {
+        console.log("there's already something there!");
+        inputCount = inputCount - 1;
+    } else {
+      console.log("input error!");
+      inputCount = inputCount - 1;
+    }
+
+  inputCount = inputCount + 1;
   buildBoard();
   // you can also use the break statement to get out of a while loop
 
@@ -91,15 +108,22 @@ function tieGame() {
       board.bottom.col3 != ".")  {
         console.log("it's a tie!");
         running = false;
+        gameStart();
   }
   
 }
   // if game is won, end game
   function winCondition(cellOne, cellTwo, cellThree) {
-    if (cellOne === cellTwo &&
-        cellThree === cellTwo &&
-        cellTwo != ".") {
+    if (cellOne === "X" &&
+        cellTwo === "X" &&
+        cellThree === "X") {
+          console.log(playerOne + " wins!");
           return true;
+    } else if (cellOne === "O" &&
+        cellTwo === "O" &&
+        cellThree === "O") {
+        console.log(playerTwo + " wins!");
+        return true;
     } else {
         return false;
     }
@@ -116,6 +140,7 @@ function tieGame() {
       winCondition(board.top.col3, board.middle.col2, board.bottom.col1) ) {
     console.log("game over!");
   running = false
+  gameStart();
   }
  }
 winGame();
