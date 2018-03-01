@@ -5,16 +5,18 @@ var board = {
     col3:"."
   },
   middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   },
   bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
+
+var emptyBoard = JSON.parse(JSON.stringify(board)); 
 
 var boardOutput = "";
 
@@ -52,10 +54,17 @@ while( running ){
 
   console.log("current value @: ", board[row][column] );
 
-  // you can also use the break statement to get out of a while loop
-  break;
+  // if game is won, end game
 
   // if all spaces are filled, end game
+  for (row in board) {
+    for (col in row) {
+      if (board[row][col] !== ".") {
+        break;
+      }
+    }
+  }
+  
 
-  // if game is won, end game
+  
 }
