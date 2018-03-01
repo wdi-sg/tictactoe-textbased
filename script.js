@@ -16,6 +16,7 @@ var board = {
   }
 };
 
+// copy of empty board for resetting board
 var emptyBoard = JSON.parse(JSON.stringify(board)); 
 
 var boardOutput = "";
@@ -55,6 +56,17 @@ while( running ){
   console.log("current value @: ", board[row][column] );
 
   // if game is won, end game
+  // if (board.top.col1 === board.top.col2 && board.top.col2 === board.top.col3 && board.top.col1 !== ".") {
+  //   alert("The winner is " + board.top.col1 + "!");
+  // }
+  // else if (board.middle.col1 === board.middle.col2 && board.middle.col2 === board.middle.col3 && board.middle.col1 !== ".") {
+  //   alert("The winner is " + board.middle.col1 + "!");
+  // }
+
+  if (winnerChecker !== false) {
+    alert("The winner is " + winnerChecker + "!");
+    break;
+  }
 
   // if all spaces are filled, end game
   for (row in board) {
@@ -64,7 +76,34 @@ while( running ){
       }
     }
   }
-  
+}
 
-  
+function winnerChecker(board) {
+  if (board.top.col1 === board.top.col2 && board.top.col2 === board.top.col3 && board.top.col1 !== ".") {
+    return board.top.col1;
+  }
+  else if (board.middle.col1 === board.middle.col2 && board.middle.col2 === board.middle.col3 && board.middle.col1 !== ".") {
+    return board.middle.col1;
+  }
+  else if (board.bottom.col1 === board.bottom.col2 && board.bottom.col2 === board.bottom.col3 && board.bottom.col1 !== ".") {
+    return board.bottom.col1;
+  }
+  else if (board.top.col1 === board.middle.col1 && board.middle.col1 === board.bottom.col1 && board.top.col1 !== ".") {
+    return board.top.col1;
+  }
+  else if (board.top.col2 === board.middle.col2 && board.middle.col2 === board.bottom.col2 && board.top.col2 !== ".") {
+    return board.top.col2;
+  }
+  else if (board.top.col3 === board.middle.col3 && board.middle.col3 === board.bottom.col3 && board.top.col3 !== ".") {
+    return board.top.col3;
+  }
+  else if (board.top.col1 === board.middle.col2 && board.middle.col2 === board.bottom.col3 && board.top.col1 !== ".") {
+    return board.top.col1;
+  }
+  else if (board.top.col3 === board.middle.col2 && board.middle.col2 === board.bottom.col1 && board.top.col3 !== ".") {
+    return board.top.col1;
+  }
+  else {
+    return false;
+  }
 }
