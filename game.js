@@ -15,7 +15,7 @@ let gameMoves = 0;
 var playername = [];
 
 const compNames = ["a Bad Apple", "Dolly", "HAL9000", "GLaDOS", "Browsah"];
-const toCheckForDanger = [[0,4,6],[6,4,8],[8,4,2],[2,4,0]];
+const toCheckForDanger = [[0,4,6],[6,4,8],[8,4,2],[2,4,0],[0,1,3],[0,1,4],[2,1,4],[2,1,5],[6,3,4],[6,7,4],[8,5,4],[8,7,4]];
 let compInPlay = false;
 let compPlayer = 2;
 let compTimer = null;
@@ -161,6 +161,12 @@ function compy386() {
     let compDecision = compData.movesLeft[Math.floor(Math.random() * compData.movesLeft.length)];
     let possibleMoves = compData.movesLeft;
     
+    // If the player opens with a side move, the computer must block by taking the center.
+    if (compData.playerMoves.length == 1 && (compData.lastPlayerMove == 1 || compData.lastPlayerMove == 3 || compData.lastPlayerMove == 5 || compData.lastPlayerMove == 7)) {
+        moveOn(compPlayer, 4);
+        return;
+    }
+
     // Does either the player or me have a winning move?
     for (let i = 0; i < toCheckForWin.length; i++) {
         let a = toCheckForWin[i].filter(index => compData.compMoves.indexOf(index) == -1);
