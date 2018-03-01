@@ -51,21 +51,50 @@ printBoard(board);
 // set a variable that represents
 // whether or not the game is currently running
 var running = true;
-
-var player = 1;
+var computerOpponent = false;
+var computerCheck = true;
+var player = "1";
 // run the game on a loop
 while( running ){
-  var positionCheck = true;
-  while (positionCheck) {
-    var row = prompt("enter your row: top, middle or bottom");
-    var column = prompt("enter your column: col1, col2, col3");
-    if (board[row][column] !== ".") {
-      alert("current position is taken. Please try another position." );
+  while (computerCheck) {
+    var computerSelection = prompt("Do you want to play against the computer or against someone else? (Computer/Human)");
+    if (computerSelection === "Computer") {
+      computerOpponent = true;
+      alert("You will be playing with the computer" );
+      computerCheck = false;
     }
-    else {
-      board[row][column] = player;
-      console.log("current value @: ", board[row][column] );
-      positionCheck = false;
+  }
+
+  if (computerOpponent && player === "C") {
+    var rowChoices = ["top","middle","bottom"];
+    var colChoices = ["col1","col2","col3"];
+    
+    var positionCheck = true;
+    while (positionCheck) {
+      var row = rowChoices[Math.floor(Math.random() * rowChoices.length)];
+      var col = colChoices[Math.floor(Math.random() * colChoices.length)];
+
+      if (board[row][column] !== ".") {}
+      else {
+        board[row][column] = player;
+        console.log("current value @: ", board[row][column] );
+        positionCheck = false;
+      }
+    }
+  }
+  else {
+    var positionCheck = true;
+    while (positionCheck) {
+      var row = prompt("enter your row: top, middle or bottom");
+      var column = prompt("enter your column: col1, col2, col3");
+      if (board[row][column] !== ".") {
+        alert("current position is taken. Please try another position." );
+      }
+      else {
+        board[row][column] = player;
+        console.log("current value @: ", board[row][column] );
+        positionCheck = false;
+      }
     }
   }
 
@@ -91,11 +120,19 @@ while( running ){
   }
 
   // toggle player
-  if (player === 1) {
-    player = 2;
+  if (computerOpponent) {
+    if (player === "1") {
+      player = "C";
+    }
+    else {
+      player = "1";
+    }
+  }
+  else if (player === "1") {
+    player = "2";
   }
   else {
-    player = 1;
+    player = "1";
   }
 }
 
