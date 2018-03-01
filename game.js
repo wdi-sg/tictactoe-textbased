@@ -164,14 +164,12 @@ function compy386() {
     // Does either the player or me have a winning move?
     for (let i = 0; i < toCheckForWin.length; i++) {
         let a = toCheckForWin[i].filter(index => compData.compMoves.indexOf(index) == -1);
-        console.log("a: " + a);
         if (a.length == 1 && !SHADOWBOARD[a[0]]) {
             moveOn(compPlayer, a[0]);
             return;
         }
 
         let b = toCheckForWin[i].filter(index => compData.playerMoves.indexOf(index) == -1);
-        console.log("b: " + b);
         if (b.length == 1 && !SHADOWBOARD[b[0]]) {
             moveOn(compPlayer, b[0]);
             return;
@@ -181,22 +179,22 @@ function compy386() {
     // Modify decision based on player move by checking for danger configurations
     for (let i = 0; i < toCheckForDanger.length; i++) {
         let c = toCheckForDanger[i].filter(index => compData.playerMoves.indexOf(index) == -1);
-        console.log("c: " + c);
         if (c.length < 3) {
             let d = c.filter(index => possibleMoves.indexOf(index) > -1);
             possibleMoves = possibleMoves.filter(index => d.indexOf(index) > -1);
         }
     }
-    console.log("possible moves: " + possibleMoves);
     if (possibleMoves[0]) {
         compDecision = possibleMoves[0];
     };
+    gameInPlay = true;
     moveOn(compPlayer, compDecision);
 }
 
 function compy386_go() {
     // Artificially delay the computer's turn to make it seem like it's thinking.
     // Actually, that's the only time the player will get to see the comp's name!!!
+    gameInPlay = false;
     print(playername[currentPlayer-1] + " is thinking ...");
     compTimer = setTimeout(compy386, Math.floor(Math.random() * 3000)); 
 }
