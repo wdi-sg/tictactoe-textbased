@@ -43,7 +43,7 @@ function print_Board(board){
     boardOutput = boardOutput + "\n";
   }
 
-  console.log( boardOutput );
+  console.log( "Board:" + "\n" + boardOutput );
 }
 
 
@@ -70,7 +70,7 @@ while( running ){
   print_Board(board);
 
   // you can also use the break statement to get out of a while loop
-  break;
+  // break;
 
   // if all spaces are filled, end game
 
