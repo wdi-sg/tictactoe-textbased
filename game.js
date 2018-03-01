@@ -32,12 +32,12 @@ function print(message) {
 }
 
 function moveOn(player, index) {
+    gameInPlay = true;
     index = parseInt(index);
     BOARD[index].innerHTML = playerMark[player];
     SHADOWBOARD[index] = currentPlayer;
     gameMoves++;
     if (compInPlay) {
-        console.log("move on " + index);
         compData.movesLeft.splice(compData.movesLeft.indexOf(index),1);
         if (currentPlayer != compPlayer) {
             compData.playerMoves.push(index);
@@ -187,7 +187,6 @@ function compy386() {
     if (possibleMoves[0]) {
         compDecision = possibleMoves[0];
     };
-    gameInPlay = true;
     moveOn(compPlayer, compDecision);
 }
 
