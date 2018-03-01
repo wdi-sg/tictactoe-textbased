@@ -99,12 +99,12 @@ while (true) {
 
   if (player1_token == 'X') {
     player2_token = 'O';
-    console.log(player2_name + ", your token will be: " + player2_token);
+    if (! computer_mode) console.log(player2_name + ", your token will be: " + player2_token);
     break;
   }
   else if (player1_token == 'O') {
     player2_token = 'X';
-    console.log(player2_name + ", your token will be: " + player2_token);
+    if (! computer_mode) console.log(player2_name + ", your token will be: " + player2_token);
     break;
   }
   else {
@@ -165,9 +165,9 @@ while( running ){
       if (rows.includes(player1_row) && cols.includes(player1_col)) {
         if (board[player1_row][player1_col] == ".") {
           board[player1_row][player1_col] = player1_token; // update board
-          printBoard(board); // print board
           tilesFilled++;
-          console.log(tilesFilled);
+          console.log("Round: " + tilesFilled);
+          printBoard(board); // print board
           break;
         }
         else console.log("Tile not available. Please choose another tile")
@@ -200,9 +200,9 @@ while( running ){
 
       if (board[player2_row][player2_col] == ".") {
         board[player2_row][player2_col] = player2_token; // update board
-        printBoard(board); // print board
         tilesFilled++;
-        console.log(tilesFilled);
+        console.log("Round: " + tilesFilled);
+        printBoard(board); // print board
         break;
       }
     }
