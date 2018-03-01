@@ -5,25 +5,12 @@ function printBoard(board) { // prints out the board
 
   // loop through each row
   for( var rowKey in board ){
-
-    /*
-     * make a variable for convenience
-     * a shortcut so you won't have
-     * to write board[rowKey][columnKey]
-     */
     var row = board[rowKey];
-
-    // loop through each column
     for( var columnKey in row ){
-
-      // concatenate the string together
       boardOutput = boardOutput + row[columnKey];
     }
-
-    // make a newline so that each row begins on a new line
     boardOutput = boardOutput + "\n";
   }
-
   console.log(boardOutput);
 }
 
@@ -80,37 +67,65 @@ var board = {
   }
 };
 
-// Player chooses a token
-var player_token;
-var computer_token;
-
+// Player chooses if he/she wants to play against the computer
+var computer_mode;
 while (true) {
-  player_token = prompt("Choose a token 'X' or 'O'");
-
-  if (player_token == 'X') {
-    computer_token = 'O';
+  var comp = prompt("Do you want to play against the computer? (y/n)");
+  if (comp == 'y') {
+    computer_mode = true;
     break;
   }
-  else if (player_token == 'O') {
-    computer_token = 'X';
+  else if (comp == 'n') {
+    computer_mode = false;
+    break;
+  }
+  else {
+    console.log("Invalid input: please type either 'y' or 'n'");
+  }
+}
+
+// get players' names
+var player1_name, player2_name;
+if (computer_mode == false) {
+  player1_name = prompt("Player 1, what's your name?");
+  player2_name = prompt("Player 2, what's your name?");
+}
+
+// Player chooses a token
+var player1_token, player2_token;
+while (true) {
+  if (computer_mode) player1_token = prompt("Choose a token 'X' or 'O'");
+  else player1_token = prompt(player1_name + ", choose a token 'X' or 'O'");
+
+  if (player1_token == 'X') {
+    player2_token = 'O';
+    console.log(player2_name + ", your token will be: " + player2_token);
+    break;
+  }
+  else if (player1_token == 'O') {
+    player2_token = 'X';
+    console.log(player2_name + ", your token will be: " + player2_token);
     break;
   }
   else {
     console.log("Invalid input: please type either 'X' or 'O'");
   }
+
 }
 
 // Player chooses order of playing
-var player_first;
-
+var player1_first;
 while (true) {
-  var order = prompt("Do you want to go first? (y/n)");
+  var order;
+  if (computer_mode) order = prompt("Do you want to go first? (y/n)");
+  else order = prompt(player1_name + ", do you want to go first? (y/n)");
+
   if (order == 'y') {
-    player_first = true;
+    player1_first = true;
     break;
   }
   else if (order == 'n') {
-    player_first = false;
+    player1_first = false;
     break;
   }
   else {
@@ -127,16 +142,64 @@ var rows = ["top", "middle", "bottom"];
 var cols = ["col1", "col2", "col3"];
 
 // run the game on a loop
+// player1: even round #s, player2: odd round #s
+var roundNum;
+if (player1_first == true) roundNum = 0;
+else roundNum = 1; // player 2 goes first
+
 while( running ){
 
-  if (player_first == false) { // computer goes first
-
-    var comp_row, comp_col;
+  if (roundNum % 2 == 0) { // player 1's turn
+    var player1_row, player1_col;
     while (true) {
-      comp_row = rows[Math.floor(Math.random() * 3)];
-      comp_col = cols[Math.floor(Math.random() * 3)];
-      if (board[comp_row][comp_col] == ".") {
-        board[comp_row][comp_col] = computer_token; // update board
+      if (computer_mode) {
+        player1_row = prompt("Enter your row: top, middle or bottom");
+        player1_col = prompt("Enter your column: col1, col2, col3");
+      }
+
+      else if (! computer_mode) {
+        player1_row = prompt(player1_name + ", enter your row: top, middle or bottom");
+        player1_col = prompt(player1_name + ", enter your column: col1, col2, col3");
+      }
+
+      if (rows.includes(player1_row) && cols.includes(player1_col)) {
+        if (board[player1_row][player1_col] == ".") {
+          board[player1_row][player1_col] = player1_token; // update board
+          printBoard(board); // print board
+          tilesFilled++;
+          console.log(tilesFilled);
+          break;
+        }
+        else console.log("Tile not available. Please choose another tile")
+      }
+
+      else console.log("Invalid input: please type a valid row and col");
+    }
+
+    // if game is won, end game
+    if (checkWin(board, player1_row, player1_col, player1_token)) {
+      if (computer_mode) console.log("You won!");
+      else console.log(player1_name + ", you won!");
+      playAgain();
+      break;
+    }
+  }
+
+  else if (roundNum % 2 == 1) { // player 2's turn
+    var player2_row, player2_col;
+    while (true) {
+
+      if (computer_mode) {
+        player2_row = rows[Math.floor(Math.random() * 3)];
+        player2_col = cols[Math.floor(Math.random() * 3)];
+      }
+      else if (! computer_mode) {
+        player2_row = prompt(player2_name + ", enter your row: top, middle or bottom");
+        player2_col = prompt(player2_name + ", enter your column: col1, col2, col3");
+      }
+
+      if (board[player2_row][player2_col] == ".") {
+        board[player2_row][player2_col] = player2_token; // update board
         printBoard(board); // print board
         tilesFilled++;
         console.log(tilesFilled);
@@ -144,74 +207,21 @@ while( running ){
       }
     }
 
-    if (checkWin(board, comp_row, comp_col, computer_token)) {
-      console.log("You lost!");
+    if (checkWin(board, player2_row, player2_col, player2_token)) {
+      if (computer_mode) console.log("You lost!");
+      else console.log(player2_name + ", you won!");
       playAgain();
       break;
     }
   }
 
-  // if all spaces are filled, end game - if computer goes first
+  // if all spaces are filled, end game
   if (tilesFilled == 9) {
     console.log("Game over: No one won");
     playAgain();
     break;
   }
 
-  // player's turn
-  var row, col;
-  while (true) {
-    row = prompt("Enter your row: top, middle or bottom");
-    col = prompt("Enter your column: col1, col2, col3");
-
-    if (rows.includes(row) && cols.includes(col)) {
-      if (board[row][col] == ".") {
-        board[row][col] = player_token; // update board
-        printBoard(board); // print board
-        tilesFilled++;
-        console.log(tilesFilled);
-        break;
-      }
-      else console.log("Tile not available. Please choose another tile")
-    }
-
-    else console.log("Invalid input: please type a valid row and col");
-  }
-
-  // if game is won, end game
-  if (checkWin(board, row, col, player_token)) {
-    console.log("You won!");
-    playAgain();
-    break;
-  }
-
-  // if all spaces are filled, end game - if player goes first
-  if (tilesFilled == 9) {
-    console.log("Game over: No one won");
-    playAgain();
-    break;
-  }
-
-  if (player_first == true) { // computer goes second
-
-    var comp_row, comp_col;
-    while (true) {
-      comp_row = rows[Math.floor(Math.random() * 3)];
-      comp_col = cols[Math.floor(Math.random() * 3)];
-      if (board[comp_row][comp_col] == ".") {
-        board[comp_row][comp_col] = computer_token; // update board
-        printBoard(board); // print board
-        tilesFilled++;
-        console.log(tilesFilled);
-        break;
-      }
-    }
-
-    if (checkWin(board, comp_row, comp_col, computer_token)) {
-      console.log("You lost!");
-      playAgain();
-      break;
-    }
-  }
+  roundNum++;
 
 }
