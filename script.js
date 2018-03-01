@@ -1,18 +1,18 @@
 var board = {
-  top:{
+  topRow:{
     col1:".",
     col2:".",
     col3:"."
   },
-  middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+  middleRow:{
+    col1:".",
+    col2:".",
+    col3:"."
   },
-  bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+  bottomRow:{
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
 
@@ -28,12 +28,12 @@ for( var rowKey in board ){
    */
   var row = board[rowKey];
 
-  // loop through each column
-  for( var columnKey in row ){
+    // loop through each column
+    for( var columnKey in row ){
 
-    // concatenate the string together
-    boardOutput = boardOutput + row[columnKey];
-  }
+      // concatenate the string together
+      boardOutput = boardOutput + row[columnKey];
+    }
 
   // make a newline so that each row begins on a new line
   boardOutput = boardOutput + "\n";
@@ -47,7 +47,7 @@ var running = true;
 
 // run the game on a loop
 while( running ){
-  var row = prompt("enter your row: top, middle or bottom");
+  var row = prompt("enter your row: topRow, middleRow or bottomRow");
   var column = prompt("enter your column: col1, col2, col3");
 
   console.log("current value @: ", board[row][column] );
