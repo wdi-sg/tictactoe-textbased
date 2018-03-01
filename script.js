@@ -54,6 +54,9 @@ var running = true;
 var computerOpponent = false;
 var computerCheck = true;
 var player = "1";
+var currentPlayer = "";
+var player1 = "";
+var player2 = "Elon Musk"
 // run the game on a loop
 while( running ){
   while (computerCheck) {
@@ -62,7 +65,22 @@ while( running ){
       computerOpponent = true;
       alert("You will be playing with the computer" );
       computerCheck = false;
+      player1 = prompt("What is your name Player 1?");
     }
+    else if (computerSelection === "Human") {
+      computerOpponent = false;
+      alert("Awesome! Play with your friend!" );
+      computerCheck = false;
+      player1 = prompt("What is your name Player 1?");
+      player2 = prompt("What is your name Player 2?");
+    }
+  }
+
+  if (player === "1") {
+    currentPlayer = player1;
+  }
+  else {
+    currentPlayer = player2;
   }
 
   if (computerOpponent && player === "C") {
@@ -85,8 +103,8 @@ while( running ){
   else {
     var positionCheck = true;
     while (positionCheck) {
-      var row = prompt("enter your row: top, middle or bottom");
-      var column = prompt("enter your column: col1, col2, col3");
+      var row = prompt(currentPlayer + ", enter your row: top, middle or bottom");
+      var column = prompt(currentPlayer + "enter your column: col1, col2, col3");
       if (board[row][column] !== ".") {
         alert("current position is taken. Please try another position." );
       }
@@ -102,7 +120,13 @@ while( running ){
 
   // if there is a winner, end game and print winner
   if (winnerChecker(board) !== false) {
-    alert("The winner is " + winnerChecker(board) + "!");
+    var winner = (winnerChecker(board));
+    if (winner === "1") {
+      alert("The winner is " + player1 + "!");
+    }
+    else {
+      alert("The winner is " + player2 + "!");
+    }
     break;
   }
   
