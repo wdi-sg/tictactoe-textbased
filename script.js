@@ -5,57 +5,69 @@ var board = {
     col3:"."
   },
   middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   },
   bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
 
+function gameBoard() {
+
 var boardOutput = "";
 
-// loop through each row
 for( var rowKey in board ){
 
-  /*
-   * make a variable for convenience
-   * a shortcut so you won't have
-   * to write board[rowKey][columnKey]
-   */
-  var row = board[rowKey];
 
-  // loop through each column
+  var row = board[rowKey];
   for( var columnKey in row ){
 
-    // concatenate the string together
     boardOutput = boardOutput + row[columnKey];
   }
-
-  // make a newline so that each row begins on a new line
   boardOutput = boardOutput + "\n";
 }
 
 console.log( boardOutput );
+};
 
-// set a variable that represents
-// whether or not the game is currently running
-var running = true;
+gameBoard();
 
-// run the game on a loop
+
+  var running = true;
+  var turnCount = 1
+
 while( running ){
   var row = prompt("enter your row: top, middle or bottom");
   var column = prompt("enter your column: col1, col2, col3");
 
-  console.log("current value @: ", board[row][column] );
-
-  // you can also use the break statement to get out of a while loop
-  break;
-
-  // if all spaces are filled, end game
-
-  // if game is won, end game
+if (turnCount % 2 !== 0 && board[row][column] === ".") {
+  board[row][column] = "X";
+} else if (turnCount % 2 == 0 && board[row][column] === ".") {
+  board[row][column] = "O";
+} else {
+  console.log("invalid row and column!");
 }
+turnCount += 1
+gameBoard();
+
+function draw() {
+  if (board.top.col1 != "." &&
+      board.top.col2 != "." &&
+      board.top.col3 != "." &&
+      board.middle.col1 != "." &&
+      board.middle.col2 != "." &&
+      board.middle.col3 != "." &&
+      board.bottom.col1 != "." &&
+      board.bottom.col2 != "." &&
+      board.bottom.col3 != ".") {
+    console.log("It's a draw!");
+  }
+  break;
+}
+
+};
+
