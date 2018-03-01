@@ -79,8 +79,8 @@
             cursor: pointer;
         }
 
-        #reset, #start{
-            width: 15em;
+        #reset, #start, #vscomp{
+            width: 13em;
             height: 3em;
             line-height: 3em;
             margin: 15px auto;
@@ -97,10 +97,20 @@
             background:orange;
         }
 
-        #start {
+        #start, #vscomp {
             background:green;
             display:block;
             cursor: pointer;
+        }
+
+        #start {
+            float:left;
+            margin-left: 25%;
+        }
+
+        #vscomp {
+            float: right;
+            margin-right: 25%;
         }
 
         #reset:hover {
@@ -138,6 +148,13 @@
             text-align: center;
             cursor: pointer;
         }
+
+        @media (max-width: 900px) {
+            #vscomp, #start {
+                float: none;
+                margin: 20px auto;
+            }
+        }
     </style>
     <title>Tic Tac Toe</title>
 </head>
@@ -147,25 +164,30 @@
     </header>
     <div id="output"></div>
     <div class="board">
-        <div class="square row1 col1"><div id="clickarea00"></div></div>
-        <div class="square row1 col2"><div id="clickarea01"></div></div>
-        <div class="square row1 col3"><div id="clickarea02"></div></div>
-        <div class="square row2 col1"><div id="clickarea10"></div></div>
-        <div class="square row2 col2"><div id="clickarea11"></div></div>
-        <div class="square row2 col3"><div id="clickarea12"></div></div>
-        <div class="square row3 col1"><div id="clickarea20"></div></div>
-        <div class="square row3 col2"><div id="clickarea21"></div></div>
-        <div class="square row3 col3"><div id="clickarea22"></div></div>
+        <div class="square row1 col1"><div id="clickarea0" data-id="0"></div></div>
+        <div class="square row1 col2"><div id="clickarea1" data-id="1"></div></div>
+        <div class="square row1 col3"><div id="clickarea2" data-id="2"></div></div>
+        <div class="square row2 col1"><div id="clickarea3" data-id="3"></div></div>
+        <div class="square row2 col2"><div id="clickarea4" data-id="4"></div></div>
+        <div class="square row2 col3"><div id="clickarea5" data-id="5"></div></div>
+        <div class="square row3 col1"><div id="clickarea6" data-id="6"></div></div>
+        <div class="square row3 col2"><div id="clickarea7" data-id="7"></div></div>
+        <div class="square row3 col3"><div id="clickarea8" data-id="8"></div></div>
     </div>
     <div id="reset">Play again!</div>
-    <div id="start">Start</div>
+    <div id="vscomp">1 Player vs Computer</div>
+    <div id="start">2 Players</div>
     <div id="modal">
         <div id="modal-content">
-            <div>
+            <div id="2pname">
                 <p>Let's have your names!</p>
                 <label for="player1name"><b>Player 1:</b></label> <input id="player1name" type="text" placeholder="Bob" name="player1name" required>
                 <br>
                 <label for="player2name"><b>Player 2:</b></label> <input id="player2name" type="player2name" placeholder="Alice" name="player2name" required>
+            </div>
+            <div id="1pname">
+                <p>Let's have your name!</p>
+                <label for="spname"><b>Player 1:</b></label> <input id="spname" type="text" placeholder="Bob" name="spname" required>
             </div>
             <div id="go">Let's go!</div>
         </div>
