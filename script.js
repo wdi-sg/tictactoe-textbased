@@ -18,6 +18,7 @@ var board = {
   }
 };
 
+// ------------------------------ Start of Functions --------------------------
 // Function to print the board
 function print_Board(board){
   var boardOutput = "";
@@ -46,7 +47,23 @@ function print_Board(board){
   console.log( "Board:" + "\n" + boardOutput );
 }
 
+// Function to check for diagonal win
+function check_Diagonal_Win(board){
 
+}
+
+// Function to check for vertical win
+function check_Vertical_Win(board){
+
+}
+
+// Function to check for horizontal win
+function check_Horizontal_Win(board){
+
+}
+// ------------------------------ End of Functions --------------------------
+
+// ------------------------------ Game - Start --------------------------
 // set a variable that represents
 // whether or not the game is currently running
 var running = true;
@@ -76,3 +93,4 @@ while( running ){
 
   // if game is won, end game
 }
+// ------------------------------ Game - End --------------------------
