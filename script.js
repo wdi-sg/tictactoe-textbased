@@ -84,21 +84,22 @@ while( running ){
   }
 
   if (computerOpponent && player === "C") {
-    var rowChoices = ["top","middle","bottom"];
-    var colChoices = ["col1","col2","col3"];
+    computerLogic("Random");
+    // var rowChoices = ["top","middle","bottom"];
+    // var colChoices = ["col1","col2","col3"];
     
-    var positionCheck = true;
-    while (positionCheck) {
-      var row = rowChoices[Math.floor(Math.random() * rowChoices.length)];
-      var col = colChoices[Math.floor(Math.random() * colChoices.length)];
+    // var positionCheck = true;
+    // while (positionCheck) {
+    //   var row = rowChoices[Math.floor(Math.random() * rowChoices.length)];
+    //   var col = colChoices[Math.floor(Math.random() * colChoices.length)];
 
-      if (board[row][column] !== ".") {}
-      else {
-        board[row][column] = player;
-        console.log("current value @: ", board[row][column] );
-        positionCheck = false;
-      }
-    }
+    //   if (board[row][column] !== ".") {}
+    //   else {
+    //     board[row][column] = player;
+    //     console.log("current value @: ", board[row][column] );
+    //     positionCheck = false;
+    //   }
+    // }
   }
   else {
     var positionCheck = true;
@@ -188,4 +189,25 @@ function winnerChecker(board) {
   else {
     return false;
   }
+}
+
+function computerLogic(level) {
+  if (level === "Random") {
+    var rowChoices = ["top","middle","bottom"];
+    var colChoices = ["col1","col2","col3"];
+    
+    var positionCheck = true;
+    while (positionCheck) {
+      var row = rowChoices[Math.floor(Math.random() * rowChoices.length)];
+      var col = colChoices[Math.floor(Math.random() * colChoices.length)];
+
+      if (board[row][column] !== ".") {}
+      else {
+        board[row][column] = player;
+        console.log("current value @: ", board[row][column] );
+        positionCheck = false;
+      }
+    }
+  }
+  
 }
