@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <style>
+        html, body {
+            margin:0;
+            box-sizing: border-box;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        
+        header {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px 0 0 0;
+        }
+
+        #output {
+            font-size: 24px;
+            width: 75%;
+            margin: 20px auto;
+            background:bisque;
+            height:3em;
+            text-align:center;
+            line-height:3em;
+        }
+        
+        .board {
+            width: 75%;
+            max-width: 680px;
+            display:grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap:20px;
+            margin:0 auto;
+        }
+        
+        .square {
+            width: 100px;
+            height: 100px;
+            color:black;
+            background: #f0f0f0;
+            position:relative;
+            font-family: 'Courgette', cursive;
+        }
+        
+        .row1 {
+            align-self:end;
+        }
+        .row2 {
+            align-self:center;
+        }
+        .row3 {
+            align-self:start;
+        }
+
+        .col1 {
+            justify-self:end;
+        }
+        .col2 {
+            justify-self:center;
+        }
+        .col3 {
+            justify-self:start;
+        }
+
+        [id^=clickarea] {
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            font-size:6em;
+            height:100%;
+            width:100%;
+            text-align:center;
+            cursor: pointer;
+        }
+
+        #reset, #start{
+            width: 15em;
+            height: 3em;
+            line-height: 3em;
+            margin: 15px auto;
+            text-align: center;
+            text-transform:uppercase;
+            color:white;
+            font-weight:bold;
+            border-radius:4px;
+            display:none;
+            cursor: pointer;
+        }
+
+        #reset {
+            background:orange;
+        }
+
+        #start {
+            background:green;
+            display:block;
+            cursor: pointer;
+        }
+
+        #reset:hover {
+            background:red;
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.75);
+            height:100%;
+            width:100%;
+        }
+
+        #modal-content {
+            background: white;
+            width: 50%;
+            margin:20% auto;
+            padding: 20px;
+        }
+
+        #modal-content p {
+            font-weight:bold;
+            font-size:20px;
+        }
+
+        #go {
+            margin-top: 20px;
+            background: red;
+            color: white;
+            border-radius: 4px;
+            width: 6em;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <header>
+        Tic Tac Toe!
+    </header>
+    <div id="output"></div>
+    <div class="board">
+        <div class="square row1 col1"><div id="clickarea00"></div></div>
+        <div class="square row1 col2"><div id="clickarea01"></div></div>
+        <div class="square row1 col3"><div id="clickarea02"></div></div>
+        <div class="square row2 col1"><div id="clickarea10"></div></div>
+        <div class="square row2 col2"><div id="clickarea11"></div></div>
+        <div class="square row2 col3"><div id="clickarea12"></div></div>
+        <div class="square row3 col1"><div id="clickarea20"></div></div>
+        <div class="square row3 col2"><div id="clickarea21"></div></div>
+        <div class="square row3 col3"><div id="clickarea22"></div></div>
+    </div>
+    <div id="reset">Play again!</div>
+    <div id="start">Start</div>
+    <div id="modal">
+        <div id="modal-content">
+            <div>
+                <p>Let's have your names!</p>
+                <label for="player1name"><b>Player 1:</b></label> <input id="player1name" type="text" placeholder="Bob" name="player1name" required>
+                <br>
+                <label for="player2name"><b>Player 2:</b></label> <input id="player2name" type="player2name" placeholder="Alice" name="player2name" required>
+            </div>
+            <div id="go">Let's go!</div>
+        </div>
+    </div>
+    <script src="./game.js"></script>
+</body>
+</html>
