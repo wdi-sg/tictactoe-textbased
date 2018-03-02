@@ -1,0 +1,8 @@
+{
+  "name": "tictactoe-textbased",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jaanhio/tictactoe-textbased.git",
+  "author": "jaanhio <jianhaot.89@gmail.com>",
+  "license": "MIT"
+}

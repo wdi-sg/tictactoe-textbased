@@ -1,61 +1,126 @@
-var board = {
-  top:{
-    col1:".",
-    col2:".",
-    col3:"."
-  },
-  middle:{
-    row1:".",
-    row2:".",
-    row3:"."
-  },
-  bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
-  }
+
+const rl = require('readline');
+
+let prompts = rl.createInterface(process.stdin, process.stdout);
+
+let game = {
+  turn: 'one',
+  state: false,
+  numberOfTurns: 0,
+  boardCount: 0
 };
 
-var boardOutput = "";
 
-// loop through each row
-for( var rowKey in board ){
-
-  /*
-   * make a variable for convenience
-   * a shortcut so you won't have
-   * to write board[rowKey][columnKey]
-   */
-  var row = board[rowKey];
-
-  // loop through each column
-  for( var columnKey in row ){
-
-    // concatenate the string together
-    boardOutput = boardOutput + row[columnKey];
+// generate board
+const generateBoard = (width) => {
+  // if width is less than 3, reject
+  // gameRunning = true;
+  if (width < 3) {
+    alert('Please select width higher than 2.');
   }
 
-  // make a newline so that each row begins on a new line
-  boardOutput = boardOutput + "\n";
+  let board = [];
+  let { boardCount } = game;
+  for(let i = 0; i < width; i++){
+    let rows = [];
+    for(let j = 0; j < width; j++){
+      rows.push(0);
+      boardCount++;
+    }
+    // console.log(rows);
+    board.push(rows);
+  }
+  // console.log(board);
+  // console.log(gameRunning);
+  console.log(`Board count: ${boardCount}`);
+  return board;
 }
 
-console.log( boardOutput );
+let board = generateBoard(3);
 
-// set a variable that represents
-// whether or not the game is currently running
-var running = true;
-
-// run the game on a loop
-while( running ){
-  var row = prompt("enter your row: top, middle or bottom");
-  var column = prompt("enter your column: col1, col2, col3");
-
-  console.log("current value @: ", board[row][column] );
-
-  // you can also use the break statement to get out of a while loop
-  break;
-
-  // if all spaces are filled, end game
-
-  // if game is won, end game
+// check for win or end of game
+const checkWin = () => {
+  // check for horizontal matches
+  let { state, numberOfTurns, boardCount } = game;
+  if (numberOfTurns > boardCount){
+    state = !state;
+    console.log(`Game has ended!`);
+  }
+  else {
+    getInputs();
+  }
 }
+
+// prompt for user inputs
+const getInputs = () => {
+  let player = '';
+  let { turn, numberOfTurns } = game;
+  console.log(`Game count: ${numberOfTurns}`);
+  numberOfTurns++;
+  console.log(`Turn: ${turn}`);
+  if (turn === 'one') {
+    turn = 'two';
+    player = 'Player 1';
+    symbol = 1;
+  }
+  else {
+    turn = 'one';
+    player = "Player 2";
+    symbol = 2;
+  }
+  prompts.question(`${player} Please choose row 0-2 `, (row) => {
+    prompts.question(`${player} Please choose column 0-2 `, (col) => {
+      console.log(`${row},${col}`);
+      // selectionTiles(x, y);
+      if(board[row][col] === 1 || board[row][col] === 2){
+        console.log(`Box is already taken. Please pick another box.`);
+        getInputs();
+      }
+      board[row][col] = symbol;
+      displayBoard(board);
+      // checkWin();
+      console.log(`Turn: ${turn}`);
+      console.log(`Game count: ${numberOfTurns}`);
+      prompts.close();
+      checkWin();
+    });
+  });
+}
+
+// display current board status 
+const displayBoard = (board) => {
+  board.forEach(row => {
+    console.log(row);
+  });
+  return board;
+}
+
+// getInputs();
+
+
+// reset game 
+const resetBoard = (board) => {
+  board.map(rows => {
+    return rows.map(col => {
+      return col = 1;
+    });
+  });
+  console.log(board);
+}
+
+
+// start game!
+const startGame = () => {
+  let { state } = game;
+  console.log(`Game started: ${state} (before changing state)`);
+  state = !state;
+  console.log(`Game started: ${state} (after changing state)`);
+  getInputs();
+  // checkWin();
+  // while(state === true){
+  //   getInputs();
+  //   checkWin();
+  // }
+}
+
+startGame();
