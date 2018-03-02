@@ -5,57 +5,99 @@ var board = {
     col3:"."
   },
   middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   },
   bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
 
 var boardOutput = "";
+var firstPlayerTurn = true;
 
-// loop through each row
-for( var rowKey in board ){
 
-  /*
-   * make a variable for convenience
-   * a shortcut so you won't have
-   * to write board[rowKey][columnKey]
-   */
-  var row = board[rowKey];
-
-  // loop through each column
-  for( var columnKey in row ){
-
-    // concatenate the string together
-    boardOutput = boardOutput + row[columnKey];
+function updateBoard() {   //loop and printout board
+  for( var rowKey in board ){
+    var row = board[rowKey];
+      for( var columnKey in row ){
+        boardOutput = boardOutput + row[columnKey] + " ";
+      }
+    boardOutput = boardOutput + "\n";    
   }
-
-  // make a newline so that each row begins on a new line
-  boardOutput = boardOutput + "\n";
+  console.log( boardOutput + "\n\n");
 }
 
-console.log( boardOutput );
 
-// set a variable that represents
-// whether or not the game is currently running
-var running = true;
+function checkWin(){
 
+  for ( var rowKey in board ){  //check horizontal
+    if (board[rowKey]["col1"] != ".") {
+      if (board[rowKey]["col1"] === board[rowKey]["col2"] && board[rowKey]["col2"] === board[rowKey]["col3"]) {
+        state = false;
+        alert("WIN!!!!!!");
+      }
+    }
+  }
+  //check vertical
+  //check diagonal
+}
+
+  //CCount number of "."
+function checkBoardFull(){
+  var boardSpaces = 0;
+  for( var rowKey in board ){
+    row = board[rowKey];
+      for( var columnKey in row ){
+        if (row[columnKey] === "."){
+          boardSpaces++;
+        } 
+      }
+    }
+    if (boardSpaces === 0) {
+      state = false;
+      alert("Its a draw!");
+      
+    }
+}
+
+//Prompt Player 1 2 input
+function playerInput() {
+  var dupe = false;
+  if (firstPlayerTurn === true){
+      currentPlayer = "Player 1 - "
+      symbol = "X"
+    } else {
+      currentPlayer = "Player 2 - "
+      symbol = "O"
+    }
+  do {
+    var row = prompt( currentPlayer + "Enter row: top, middle or bottom");
+    var column = prompt( currentPlayer + "Enter column: col1, col2, col3");
+
+    if (board[row][column] === "."){
+      board[row][column] = symbol;
+      firstPlayerTurn = !firstPlayerTurn;
+      updateBoard();
+      dupe = false;
+
+    } else {
+
+      dupe = true;
+      alert("That spot is taken! Choose somewhere else.")
+    }
+  } while ( dupe === true );
+}
+
+//Initialise
+
+var state = true;
 // run the game on a loop
-while( running ){
-  var row = prompt("enter your row: top, middle or bottom");
-  var column = prompt("enter your column: col1, col2, col3");
-
-  console.log("current value @: ", board[row][column] );
-
-  // you can also use the break statement to get out of a while loop
-  break;
-
-  // if all spaces are filled, end game
-
-  // if game is won, end game
+while( state ) {
+  playerInput();
+  checkWin();
+  checkBoardFull();
 }
