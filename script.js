@@ -1,5 +1,5 @@
 
-// Initializa tic-tac-toe board with default values
+// Initialize tic-tac-toe board with default values
 var board = {
   top:{
     col1:".",
@@ -164,48 +164,57 @@ function check_All_Filled(board){
       }
   return false;
 }
+
+// Function to start the game
+function start_Game(condition, board){
+  // run the game on a loop
+  while(condition){
+
+    // Ask user for input at which row and column
+    var row = prompt("Enter your row: top, middle or bottom");
+    var column = prompt("Enter your column: col1, col2, col3");
+
+    // Ask user for the value that is to be inserted
+    var value = prompt("Enter your value: X, O");
+
+    // Update board with value user inserted
+    board[row][column] = value;
+
+    // Display location of where the value is & and the value itselfS
+    console.log("Current value @ " + "[" + row + "]" + "[" + column + "] = ", board[row][column]);
+
+    // Display the board with the updated value
+    print_Board(board);
+
+    // if game is won, end game
+    var win = check_Winning_State(board);
+    if (win){
+      alert("YAYYY!~~~, YOU WON THE GAME");
+      running = false;
+      break;
+    }
+
+    // if all spaces are filled - end game, else - continue gameplay
+    var all_filled = check_All_Filled(board);
+    if (all_filled){
+      alert("Board filled, GAME OVER!~~~");
+      running = false;
+      break;
+    }
+  }
+}
 // ------------------------------ End of Functions --------------------------
 
 // ------------------------------ Game - Start --------------------------
-// set a variable that represents
-// whether or not the game is currently running
-var running = true;
-var no_win_state = true;
-var no_all_filled = true;
 
-// run the game on a loop
-while( running ){
-  // Ask user for input at which row and column
-  var row = prompt("Enter your row: top, middle or bottom");
-  var column = prompt("Enter your column: col1, col2, col3");
-
-  // Ask user for the value that is to be inserted
-  var value = prompt("Enter your value: X, O");
-
-  // Update board with value user inserted
-  board[row][column] = value;
-
-  // Display location of where the value is & and the value itselfS
-  console.log("Current value @ " + "[" + row + "]" + "[" + column + "] = ", board[row][column]);
-
-  // Display the board with the updated value
-  print_Board(board);
-
-  // if game is won, end game
-  var win = check_Winning_State(board);
-  if (win){
-    alert("YAYYY!~~~, YOU WON THE GAME");
-    running = false;
-    break;
-  }
-
-  // if all spaces are filled - end game, else - continue gameplay
-  var all_filled = check_All_Filled(board);
-  if (all_filled){
-    alert("Board filled, GAME OVER!~~~");
-    running = false;
-    break;
-  }
-
+// Ask user if they want to play the game
+var play = prompt("Do you want to play? YES/NO");
+if (play === "YES") {
+  var running = true
+  start_Game(running, board);
 }
+else {
+  console.log("You have chosen not to play the game");
+}
+
 // ------------------------------ Game - End --------------------------
