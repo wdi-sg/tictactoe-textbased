@@ -146,7 +146,17 @@ for (i=1; i<11; i++){
 
     console.log(`TURN ${i} - ${playerA.name}`);
     userInput = promptUser(playerA);
-    board[userInput[0]][userInput[1]] = playerA.symbol
+    // check if space is taken
+     if (!(userInput[0] in board) || !(userInput[1] in board[userInput[0]])) {
+      alert('unknown input. check your spelling!');
+      i--;
+    } else if (board[userInput[0]][userInput[1]] === playerA.symbol || board[userInput[0]][userInput[1]] === playerB.symbol) {
+      alert('space on board is taken!');
+      i--;
+    } else {
+      board[userInput[0]][userInput[1]] = playerA.symbol;
+    }
+    
     printBoard()
   } else {
     // player b
@@ -157,7 +167,16 @@ for (i=1; i<11; i++){
 
     console.log(`TURN ${i} - ${playerB.name}`);
     userInput = promptUser(playerB);
+    // check if space is taken
+     if (!(userInput[0] in board) || !(userInput[1] in board[userInput[0]])) {
+      alert('unknown input. check your spelling!');
+      i--;
+    } else if (board[userInput[0]][userInput[1]] === playerA.symbol || board[userInput[0]][userInput[1]] === playerB.symbol) {
+      alert('space on board is taken!');
+      i--;
+    } else {
     board[userInput[0]][userInput[1]] = playerB.symbol
+  }
     printBoard()
   }
 }
