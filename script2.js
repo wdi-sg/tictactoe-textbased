@@ -60,8 +60,8 @@ var checkWinRow=function(){
       return;
     }
     else if (row["col1"]===row["col2"]&&row["col2"]===row["col3"]){
-      alert("[checkWinRow] You won!");
-      resetBoard();
+      //alert("[checkWinRow] You won!");
+      //resetBoard();
       return true;
     }else {
       return false;
@@ -80,9 +80,9 @@ var checkWinCol=function(){
       checkArray=[];
       return;
     }else if (checkArray[0]==checkArray[1]&&checkArray[1]===checkArray[2]){
-      alert ("[checkWinCol] You won!");
+      //alert ("[checkWinCol] You won!");
       checkArray=[];
-      resetBoard();
+      //resetBoard();
       return true;
     }else {
       checkArray=[];
@@ -95,8 +95,8 @@ var checkWinDiagLR=function(){
   if(board["row1"]["col1"]=="."&&board["row2"]["col2"]=="."&&board["row3"]["col3"]=="."){
     return;
   }else if(board["row1"]["col1"]=="+"&&board["row2"]["col2"]=="+"&&board["row3"]["col3"]=="+") {
-    alert("[checkWinDiagLR] You won!");
-    resetBoard();
+    //alert("[checkWinDiagLR] You won!");
+    //resetBoard();
     return true;
   }else{
     return;
@@ -107,44 +107,14 @@ var chekWinDiagRL=function(){
   if(board["row1"]["col3"]=="."&&board["row2"]["col2"]=="."&&board["row3"]["col1"]=="."){
     return;
   }else if(board["row1"]["col3"]==board["row2"]["col2"]&&board["row2"]["col2"]==board["row3"]["col1"]){
-    alert ("[chekWinDiagRL] You won!");
-    resetBoard();
+    //alert ("[chekWinDiagRL] You won!");
+    //resetBoard();
     return true;
   }else{
     return;
   }
 }
 
-   /*
-    row 1,column 1 - check value
-    row 1,column 2 - check value
-    row 1,column 3 - check value
-
-    row 2,column 1 - check value
-    row 2,column 2 - check value
-    row 2,column 3 - check value
-   */ 
-     
-    /*
-    row 1,column 1 - check value
-    row 2,column 1 - check value
-    row 3,column 1 - check value
-
-    row 1,column 2 - check value
-    row 2,column 2 - check value
-    row 3,column 2 - check value
-   */  
-
-   /*
-    row 1,column 1 - check value
-    row 2,column 2 - check value
-    row 3,column 3 - check value
-
-    row 1,column 3 - check value
-    row 2,column 2 - check value
-    row 3,column 1 - check value
-   */
-  
 
 // run the game on a loop
 
@@ -156,7 +126,7 @@ var running=function(){
   }
 }
 
-while(true){
+do {
   var row = prompt("enter your row: row1, row2 or row3");
   var column = prompt("enter your column: col1, col2, col3");
   updateScore(board,row,column);
@@ -166,10 +136,11 @@ while(true){
   chekWinDiagRL();
   console.log("CurrentBoard:");
   printBoard();
-  if(running()==false){
-    break;
-  }
-}
+}while (running()==true);
+if (running()==false){
+    alert("You won!");
+  };
+resetBoard();
 
   // you can also use the break statement to get out of a while loop
   //break;
