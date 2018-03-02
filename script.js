@@ -7,14 +7,14 @@ var board = {
     col3:"."
   },
   middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   },
   bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
 
@@ -61,6 +61,17 @@ function check_Vertical_Win(board){
 function check_Horizontal_Win(board){
 
 }
+
+// Function to check for all filled
+function check_All_Filled(board){
+  if ((board.top.col1 != "." && board.top.col2 != "." && board.top.col3 != ".") &&
+      (board.middle.col1 != "." && board.middle.col2 != "." && board.middle.col3 != ".") &&
+      (board.bottom.col1 != "." && board.bottom.col2 != "." && board.bottom.col3 != ".")){
+        console.log("Board filled");
+        return true;
+      }
+  return false;
+}
 // ------------------------------ End of Functions --------------------------
 
 // ------------------------------ Game - Start --------------------------
@@ -89,7 +100,15 @@ while( running ){
   // you can also use the break statement to get out of a while loop
   // break;
 
-  // if all spaces are filled, end game
+  // if all spaces are filled - end game, else - continue gameplay
+  var all_filled = check_All_Filled(board);
+  if (all_filled){
+    alert("Board filled, GAME OVER!~~~");
+    break;
+  }
+  else {
+    continue;
+  }
 
   // if game is won, end game
 }
