@@ -1,61 +1,80 @@
 var board = {
-  top:{
+  topRow:{
     col1:".",
     col2:".",
     col3:"."
   },
-  middle:{
-    row1:".",
-    row2:".",
-    row3:"."
+  middleRow:{
+    col1:".",
+    col2:".",
+    col3:"."
   },
-  bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+  bottomRow:{
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
 
-var boardOutput = "";
-
-// loop through each row
-for( var rowKey in board ){
-
-  /*
-   * make a variable for convenience
-   * a shortcut so you won't have
-   * to write board[rowKey][columnKey]
-   */
-  var row = board[rowKey];
-
-  // loop through each column
-  for( var columnKey in row ){
-
-    // concatenate the string together
-    boardOutput = boardOutput + row[columnKey];
-  }
-
-  // make a newline so that each row begins on a new line
+function createOutputBoard(newBoard) {
+  var boardOutput = "";
+  for( var rowKey in board ){
+    var row = board[rowKey];
+    for( var columnKey in row ){
+      boardOutput = boardOutput + row[columnKey];
+    }
   boardOutput = boardOutput + "\n";
+  }
+  return boardOutput;
 }
 
-console.log( boardOutput );
+function checkWin() {
+  // horizontal win
+  for (var rowKey in board ){
+    if (board[rowKey].col1 == board[rowKey].col2 && board[rowKey].col2 == board[rowKey].col3 && board[rowKey].col1 != '.') {
+      console.log("horizontal");
+      return true;
+    }
+  }
+  // vertical win
+  for (var i = 1; i <= 3; i++) {
+    if (board.topRow["col" + i] == board.middleRow["col" + i] && board.middleRow["col" + i] == board.bottomRow["col" + i] && board.topRow["col" + i] != '.') {
+      console.log("vertical");
+      return true;
+    }
+  }
+  // diagonal win
+  if (((board.topRow["col" + 1] == board.middleRow["col" + 2] && board.middleRow["col" + 2] == board.bottomRow["col" + 3]) || 
+       (board.topRow["col" + 3] == board.middleRow["col" + 2] && board.middleRow["col" + 2] == board.bottomRow["col" + 1])) && board.middleRow["col" + 2] != '.') {
+    console.log("diagonal");
+    return true;
+  }
+  return false;
+}
 
-// set a variable that represents
-// whether or not the game is currently running
 var running = true;
+var playerTurn = 0;
 
-// run the game on a loop
-while( running ){
-  var row = prompt("enter your row: top, middle or bottom");
-  var column = prompt("enter your column: col1, col2, col3");
+while (running) {
+  var row = prompt("enter your row: top, middle or bottom") + 'Row';
+  var column = 'col' + prompt("enter your column: 1, 2, 3");
 
-  console.log("current value @: ", board[row][column] );
-
-  // you can also use the break statement to get out of a while loop
-  break;
-
-  // if all spaces are filled, end game
-
-  // if game is won, end game
+  if (board[row][column] != '.') {
+    alert('Please select another square');
+  } else {
+    if (playerTurn % 2 == 0) {
+      board[row][column] = 1;
+    } else {
+      board[row][column] = 2;
+    }
+    
+    playerTurn++;
+    
+    var newBoard = createOutputBoard(board);
+    console.log(newBoard);
+    
+    if (playerTurn == 9 || checkWin()) {
+      running = false;
+    }
+  }
 }
