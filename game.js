@@ -15,7 +15,8 @@ let gameMoves = 0;
 var playername = [];
 
 const compNames = ["a Bad Apple", "Dolly", "HAL9000", "GLaDOS", "Browsah"];
-const toCheckForDanger = [[0,4,6],[6,4,8],[8,4,2],[2,4,0],[0,1,3],[0,1,4],[2,1,4],[2,1,5],[6,3,4],[6,7,4],[8,5,4],[8,7,4]];
+const toCheckForDanger = [[0,4,6],[6,4,8],[8,4,2],[2,4,0]];
+const sideMove = [1,3,5,7];
 let compInPlay = false;
 let compPlayer = 2;
 let compTimer = null;
@@ -156,33 +157,52 @@ function setPlayerNames() {
     gameInPlay = true;
 }
 
+function getSideMove() {
+    return sideMove[Math.floor(Math.random() * sideMove.length)];
+}
+
 function compy386() {
     // Pick a random move first to always have a result to return.. modify this decision later.
     let compDecision = compData.movesLeft[Math.floor(Math.random() * compData.movesLeft.length)];
     let possibleMoves = compData.movesLeft;
     
-    // If the player opens with a side move, the computer must block by taking the center.
-    if (compData.playerMoves.length == 1 && (compData.lastPlayerMove == 1 || compData.lastPlayerMove == 3 || compData.lastPlayerMove == 5 || compData.lastPlayerMove == 7)) {
+    // If the player opens with a corner move, the computer must block by taking the center.
+    if (compData.playerMoves.length == 1 && (compData.lastPlayerMove == 0 || compData.lastPlayerMove == 2 || compData.lastPlayerMove == 6 || compData.lastPlayerMove == 8)) {
         moveOn(compPlayer, 4);
         return;
     }
 
-    // Does either the player or me have a winning move?
+    // If the player opened with a corner move, the computer would have blocked by taking the center. If the player now forms a diagonal, the computer MUST counter-attack now by making a side-move!
+    if (compData.playerMoves.length == 2) {
+        let z = compData.playerMoves;
+        if (z.includes(0) && z.includes(8)) {
+            moveOn(compPlayer, getSideMove());
+            return;
+        } else if (z.includes(2) && z.includes(6)) {
+            moveOn(compPlayer, getSideMove());
+            return;
+        }
+    }
+
+    // Does either the player or me have a winning move? If so, block it.
     for (let i = 0; i < toCheckForWin.length; i++) {
         let a = toCheckForWin[i].filter(index => compData.compMoves.indexOf(index) == -1);
         if (a.length == 1 && !SHADOWBOARD[a[0]]) {
             moveOn(compPlayer, a[0]);
             return;
         }
-
+    };
+    
+    for (let i = 0; i < toCheckForWin.length; i++) {
         let b = toCheckForWin[i].filter(index => compData.playerMoves.indexOf(index) == -1);
         if (b.length == 1 && !SHADOWBOARD[b[0]]) {
+            console.log("Player has winning move at " + b[0]);
             moveOn(compPlayer, b[0]);
             return;
         }
     };
     
-    // Modify decision based on player move by checking for danger configurations
+    // Modify decision based on player move by checking for other danger configurations
     for (let i = 0; i < toCheckForDanger.length; i++) {
         let c = toCheckForDanger[i].filter(index => compData.playerMoves.indexOf(index) == -1);
         if (c.length < 3) {
@@ -190,9 +210,11 @@ function compy386() {
             possibleMoves = possibleMoves.filter(index => d.indexOf(index) > -1);
         }
     }
+    
     if (possibleMoves[0]) {
         compDecision = possibleMoves[0];
     };
+
     moveOn(compPlayer, compDecision);
 }
 
@@ -201,7 +223,7 @@ function compy386_go() {
     // Actually, that's the only time the player will get to see the comp's name!!!
     gameInPlay = false;
     print(playername[currentPlayer-1] + " is thinking ...");
-    compTimer = setTimeout(compy386, Math.floor(Math.random() * 3000)); 
+    compTimer = setTimeout(compy386, Math.floor(Math.random() * 500)); 
 }
 
 // Set up all the clickables
