@@ -42,8 +42,8 @@ function checkWin(){
       }
     }
   }
-  //check vertical
-  //check diagonal
+  //check vertical to be done
+  //check diagonal to be dowe
 }
 
   //CCount number of "."
@@ -69,10 +69,10 @@ function playerInput() {
   var dupe = false;
   if (firstPlayerTurn === true){
       currentPlayer = "Player 1 - "
-      symbol = "X"
+      symbol = "X";
     } else {
       currentPlayer = "Player 2 - "
-      symbol = "O"
+      symbol = "O";
     }
   do {
     var row = prompt( currentPlayer + "Enter row: top, middle or bottom");
