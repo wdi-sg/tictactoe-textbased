@@ -1,20 +1,22 @@
 var board = {
-  top:{
+  topRow:{
+    col1:"x",
+    col2:"o",
+    col3:"."
+  },
+  middleRow:{
     col1:".",
     col2:".",
     col3:"."
   },
-  middle:{
-    row1:".",
-    row2:".",
-    row3:"."
-  },
-  bottom:{
-    row1:".",
-    row2:".",
-    row3:"."
+  bottomRow:{
+    col1:".",
+    col2:".",
+    col3:"."
   }
 };
+
+// HOW TO PRINT OUR THE STATE OF THE GAME
 
 var boardOutput = "";
 
@@ -41,13 +43,17 @@ for( var rowKey in board ){
 
 console.log( boardOutput );
 
+
+
+
+
 // set a variable that represents
 // whether or not the game is currently running
-var running = true;
+var running = false;
 
 // run the game on a loop
 while( running ){
-  var row = prompt("enter your row: top, middle or bottom");
+  var row = prompt("enter your row: topRow, middleRow or bottomRow");
   var column = prompt("enter your column: col1, col2, col3");
 
   console.log("current value @: ", board[row][column] );
