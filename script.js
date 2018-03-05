@@ -165,6 +165,7 @@ function check_All_Filled(board){
 function start_Game(condition, board){
   // Ask for player 1 name and game_token
   player1_name = prompt("Enter player 1 name: ");
+  players.player1.name = player1_name;
   player1_token = prompt("Player 1, choose 'X' or 'O'");
   alert("PLAYER 1, YOUR GAME TOKEN IS " + player1_token);
 
@@ -181,13 +182,14 @@ function start_Game(condition, board){
 
   // Ask for player 2 name and notify player 2 of game_token
   player2_name = prompt("Enter player 2 name: ");
+  players.player2.name = player2_name;
   alert("PLAYER 2, YOUR GAME TOKEN IS " + player2_token);
 
   console.log("Player 1 token is " + player1_token);
   console.log("Player 2 token is " + player2_token);
 
   // Notify players to start with player 1 first
-  alert("----------------PLAYER 1 GOES FIRST-------------------------");
+  alert("---------------- " + players.player1.name + " GOES FIRST-------------------------");
 
   // run the game on a loop
   while(condition){
@@ -195,15 +197,24 @@ function start_Game(condition, board){
     // Increment round by 1
     round += 1;
 
-    // Ask user for input at which row and column
-    var row = prompt("Players, enter your row: top, middle or bottom");
-    var column = prompt("Players, enter your column: col1, col2, col3");
+    // Ask for PLAYER 2 inputs
+    if (round % 2 == 0) {
+      // Ask user for input at which row and column
+      var row = prompt(players.player2.name + ", Enter your row: [top, middle or bottom]");
+      var column = prompt(players.player2.name + ", Enter your column: [col1, col2, col3]");
 
-    // Ask user for the value that is to be inserted
-    var value = prompt("Players, enter your value: X, O");
+      // Update board with value player 2 inserted
+      board[row][column] = players.player2.game_token;
+    }
+    // Ask for PLAYER 1 inputs
+    else if (round % 2 == 1) {
+      // Ask user for input at which row and column
+      var row = prompt(players.player1.name + ", Enter your row: top, middle or bottom");
+      var column = prompt(players.player1.name + ", Enter your column: col1, col2, col3");
 
-    // Update board with value user inserted
-    board[row][column] = value;
+      // Update board with value player 1 inserted
+      board[row][column] = players.player1.game_token;
+    }
 
     // Display location of where the value is & and the value itselfS
     console.log("Current value @ " + "[" + row + "]" + "[" + column + "] = ", board[row][column]);
