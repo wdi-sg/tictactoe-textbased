@@ -37,7 +37,12 @@ Whatever we type into the textbox in the window that prompt() brings up, is retu
 - when the game ends, or when the page is reloaded / loads for the very first time, prompt your users to ask if they want to play
 - ask the names of players 1 and 2 and display that back to them as they play and win
 
-### 4. Even Further
+### 4. Even Further - Dynamic Board
+- Ask the user in the beggining on the game how large of a board they want.
+- Ask them how many in a row they want to qualify as a win
+- Detect the win state
+
+### 4. Even Further!!!11!! - Computer Player
 - ask the player if they want to play against the computer
 - make the computer play by randomly picking a spot on the board
 - modify the computer player to be defensive and block the human player from winning
