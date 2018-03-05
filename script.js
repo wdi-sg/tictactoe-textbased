@@ -42,39 +42,39 @@ function drawBoard(){
 var running = true;
 
 //register players name
-var player1 = "";
-var player2 = "";
-
+var player1 = '';
+var player2 = '';
 function getPlayersName() {
-  while (running) {
+  if (running) {
     player1 = prompt("Enter Player 1's Name: ");
     player2 = prompt("Enter Player 2's Name: ");
-    return player1;
+
     console.log(player1);
-    return player2;
     console.log(player2);
   }
-  break;
 }
+
 
 //assign players' token
 var p1Token = "O";
 var p2Token = "X";
 
-var playCount = 0;
+var playCount = 1;
 
 //Actual Game Start
 // run the game on a loop
+row = "";
+column = "";
 function getInput() {
-  if (playCount % 2 === 1) {
-    var row = prompt(player1 + " enter your row: topRow, middleRow or bottomRow");
-    var column = prompt(player1 + "enter your column: col1, col2, col3");
-    console.log("Current Value @: ", board[row][column]);
+  if (playCount % 2 === 0) {
+    row = prompt(player2 + " enter your row: topRow, middleRow or bottomRow");
+    column = prompt(player2 + "enter your column: col1, col2, col3");
+    console.log("Current Value @: " + row + " " + column);
   }
   else {
-    var row = prompt(player2 + " enter your row: topRow, middleRow or bottomRow");
-    var column = prompt(player2 + "enter your column: col1, col2, col3");
-    console.log("Current Value @: ", board[row][column]);
+    var row = prompt(player1 + " enter your row: topRow, middleRow or bottomRow");
+    var column = prompt(player1 + "enter your column: col1, col2, col3");
+    console.log("Current Value @: " + row + " " + column);
   }
 }
 
@@ -82,26 +82,26 @@ function getInput() {
 
 function checkBox(row, column) {
   //if board is unavailable
-  if(board[row][column] === "O" || board[row][column] === "X") {
+  if(board[row].column === "O" || board[row].column === "X") {
     getInput();
-    return checkBox(row,column);
+    checkBox(row,column);
   }
   else {
     //if board is empty
     playCount++;
+    saveInput();
   }
 }
 
 //save the input selection
-var token = "";
 function saveInput() {
-  if (playCount % 2 === 1){
-    token = board[row][column] = p1Token;
-    return board;
+  if (playCount % 2 === 0){
+    var token = board[row].column = p2Token;
+    console.log(board);
   }
   else {
-    token = board[row][column] = p2Token;
-    return board;
+    var token = board[row].column = p1Token;
+    console.log(board);
   }
 }
 
@@ -153,3 +153,8 @@ function compareInput() {
   }
 }
 
+drawBoard();
+getPlayersName();
+getInput();
+checkBox(row, column);
+compareInput();
