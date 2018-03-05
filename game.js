@@ -8,6 +8,13 @@ const GAME_MOVE_LIMIT = 9;
 const GAME_STATE_IN_PROGRESS = 0;
 const GAME_STATE_WON = 1;
 const GAME_STATE_DRAW = 2;
+
+// I've chosen to use 2 arrays since I'm implementing my game in the browser window. BOARD is the array
+// that refers to the boxes on the document, while SHADOWBOARD is an abstraction of it, by placing
+// player numbers instead of their symbols into the array. Yes, it can be done with a single array
+// and checking for the content of each box and translating it back into a number, e.g. if
+// BOARD[2].innerHTML = "X" then we know that player 1 has taken box 3 on the grid, but I'm lazy to
+// do the translation. Besides, it only takes up tiny bit more memory to create that 2nd array :D 
 const BOARD = [];
 const SHADOWBOARD = [];
 
