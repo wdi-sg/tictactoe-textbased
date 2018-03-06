@@ -18,6 +18,24 @@ var board = {
   }
 };
 
+var clean_board = {
+  top:{
+    col1:".",
+    col2:".",
+    col3:"."
+  },
+  middle:{
+    col1:".",
+    col2:".",
+    col3:"."
+  },
+  bottom:{
+    col1:".",
+    col2:".",
+    col3:"."
+  }
+};
+
 var players = {
   player1:{
     game_token:"."
@@ -34,8 +52,25 @@ var player2_token = "";
 var player1_win = false;
 var player2_win = false;
 var round = 0;
+var running = true;
 
 // ------------------------------ Start of Functions --------------------------
+// Function to reset variables
+function reset_variables(){
+  player1_name = "";
+  player2_name = "";
+  player1_token = "";
+  player2_token = "";
+  player1_win = false;
+  player2_win = false;
+  round = 0;
+  board = clean_board;
+  console.log("Board after clean up");
+  console.log(print_Board(board));
+  running = true;
+  return board;
+}
+
 // Function to print the board
 function print_Board(board){
   var boardOutput = "";
@@ -166,8 +201,8 @@ function start_Game(condition, board){
   // Ask for player 1 name and game_token
   player1_name = prompt("Enter player 1 name: ");
   players.player1.name = player1_name;
-  player1_token = prompt("Player 1, choose 'X' or 'O'");
-  alert("PLAYER 1, YOUR GAME TOKEN IS " + player1_token);
+  player1_token = prompt(players.player1.name + ", Choose your game token 'X' or 'O'");
+  alert(players.player1.name + ", YOUR GAME TOKEN IS " + player1_token);
 
   // Update players 1 & 2 game_token
   players.player1.game_token = player1_token;
@@ -183,13 +218,15 @@ function start_Game(condition, board){
   // Ask for player 2 name and notify player 2 of game_token
   player2_name = prompt("Enter player 2 name: ");
   players.player2.name = player2_name;
-  alert("PLAYER 2, YOUR GAME TOKEN IS " + player2_token);
+  alert(players.player2.name + ", YOUR GAME TOKEN IS " + player2_token);
 
   console.log("Player 1 token is " + player1_token);
   console.log("Player 2 token is " + player2_token);
 
   // Notify players to start with player 1 first
   alert("---------------- " + players.player1.name + " GOES FIRST-------------------------");
+
+  console.log("Condition is " + condition);
 
   // run the game on a loop
   while(condition){
@@ -226,21 +263,48 @@ function start_Game(condition, board){
     check_Winning_State(board);
     if (player1_win == true){
       alert("CONGRATS!~~~, " + player1_name + " HAS WON THE GAME!");
-      running = false;
-      break;
+      // running = false;
+      var replay = prompt("Do you want to replay the game? YES/NO");
+      if (replay === "YES") {
+        var new_board = reset_variables();
+        start_Game(true, new_board);
+      }
+      else if (replay === "NO") {
+        // condition = false;
+        break;
+      }
+      // break;
     }
     else if (player2_win == true) {
       alert("CONGRATS!~~~, " + player2_name + " HAS WON THE GAME!");
-      running = false;
-      break;
+      // running = false;
+      var replay = prompt("Do you want to replay the game? YES/NO");
+      if (replay === "YES") {
+        var new_board = reset_variables();
+        start_Game(true, new_board);
+      }
+      else if (replay === "NO") {
+        // condition = false;
+        break;
+      }
+      // break;
     }
 
     // if all spaces are filled - end game, else - continue gameplay
     var all_filled = check_All_Filled(board);
     if (all_filled){
       alert("Board filled, GAME OVER!~~~");
-      running = false;
-      break;
+      // running = false;
+      var replay = prompt("Do you want to replay the game? YES/NO");
+      if (replay === "YES") {
+        var new_board = reset_variables();
+        start_Game(true, new_board);
+      }
+      else if (replay === "NO") {
+        // condition = false;
+        break;
+      }
+      // break;
     }
   }
 }
@@ -251,8 +315,21 @@ function start_Game(condition, board){
 // Ask user if they want to play the game
 var play = prompt("Do you want to play? YES/NO");
 if (play === "YES") {
-  var running = true
-  start_Game(running, board);
+  while(running){
+    console.log("Condition");
+    start_Game(running, board);
+    // var replay = prompt("Do you want to replay the game? YES/NO");
+    // if (replay === "YES") {
+    //   reset_variables();
+    //   start_Game(running, board);
+    // }
+    // else if (replay === "NO") {
+    //   running = false;
+    //   break;
+    // }
+    running = false;
+    break;
+  }
 }
 else {
   console.log("You have chosen not to play the game");

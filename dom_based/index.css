@@ -1,0 +1,13 @@
+
+.container{
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 3%;
+}
+
+.btn-primary, .btn-success, .btn-info{
+  width: 200px;
+  height: 200px;
+  margin: 1%;
+  font-size: 3em;
+}
