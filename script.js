@@ -1,15 +1,15 @@
 var board = {
-  topRow:{
-    col1:"x",
-    col2:"o",
-    col3:"."
-  },
-  middleRow:{
+  row1:{
     col1:".",
     col2:".",
     col3:"."
   },
-  bottomRow:{
+  row2:{
+    col1:".",
+    col2:".",
+    col3:"."
+  },
+  row3:{
     col1:".",
     col2:".",
     col3:"."
