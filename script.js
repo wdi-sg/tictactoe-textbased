@@ -1,51 +1,51 @@
 var board = {
-  topRow:{
-    col1:"x",
-    col2:"o",
-    col3:"."
-  },
-  middleRow:{
+  row1:{
     col1:".",
     col2:".",
     col3:"."
   },
-  bottomRow:{
+  row2:{
+    col1:".",
+    col2:".",
+    col3:"."
+  },
+  row3:{
     col1:".",
     col2:".",
     col3:"."
   }
 };
 
-// HOW TO PRINT OUR THE STATE OF THE GAME
+var outputBoard = function(board){
 
-var boardOutput = "";
+  var boardOutput = "";
 
-// loop through each row
-for( var rowKey in board ){
+  // loop through each row
+  for( var rowKey in board ){
 
-  /*
-   * make a variable for convenience
-   * a shortcut so you won't have
-   * to write board[rowKey][columnKey]
-   */
-  var row = board[rowKey];
+    /*
+     * make a variable for convenience
+     * a shortcut so you won't have
+     * to write board[rowKey][columnKey]
+     */
+    var row = board[rowKey];
 
-  // loop through each column
-  for( var columnKey in row ){
+    // loop through each column
+    for( var columnKey in row ){
 
-    // concatenate the string together
-    boardOutput = boardOutput + row[columnKey];
+      // concatenate the string together
+      boardOutput = boardOutput + row[columnKey];
+    }
+
+    // make a newline so that each row begins on a new line
+    boardOutput = boardOutput + "\n";
   }
 
-  // make a newline so that each row begins on a new line
-  boardOutput = boardOutput + "\n";
+  return boardOutput;
+
 }
 
-console.log( boardOutput );
-
-
-
-
+/* main game loop */
 
 // set a variable that represents
 // whether or not the game is currently running
@@ -53,15 +53,21 @@ var running = false;
 
 // run the game on a loop
 while( running ){
+
+  // get some values from the user
   var row = prompt("enter your row: topRow, middleRow or bottomRow");
   var column = prompt("enter your column: col1, col2, col3");
 
-  console.log("current value @: ", board[row][column] );
+  // set the values in the board data structure
+  board[row][column] = currentPlayer;
 
-  // you can also use the break statement to get out of a while loop
-  break;
+  // change the current player
+  if( currentPlayer === 'X' ){
+    currentPlayer = 'O';
+  }else{
+    currentPlayer = 'X';
+  }
 
-  // if all spaces are filled, end game
-
-  // if game is won, end game
+  // output the board
+  console.log( outputBoard( board ) );
 }
