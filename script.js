@@ -122,4 +122,4 @@ function checkWinState() {
   }
 }
 
-generateBoard(2);
+generateBoard(4);
